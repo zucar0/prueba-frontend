@@ -5,61 +5,47 @@ const app = express();
 
 app.use(express.json()); //Middleware (para analizar solicitudes en formato Json)
 
-let contacts = []; // Arreglo para los contactos
+let contacts = []; // Arreglo para contactos
+let users = [] // Array para usuarios
 
-// Definición de Endpoint para obtener todos los contactos
-app.get('/contacts', (req, res) => {
-  res.json(contacts);
-});
-
-// Definición de endpoint para obtener un contacto por su ID (GET)
-app.get('/contacts/:contactId', (req, res) => {
-  const contactId = parseInt(req.params.contactId);
-  const contact = contacts.find((contact) => contact.id === contactId);
-  if (contact) {
-    res.json(contact);
-  } else {
-    res.status(404).json({ error: 'El contacto no fue encontrado' });
-  }
-});
-
-// Desfinición de endpoint para crear un nuevo contacto (POST)
-app.post('/contacts', (req, res) => {
-  const newContact = req.body;
-  contacts.push(newContact);
-  res.status(201).json(newContact);
-});
-
-// Definición de endpoint para actualizar un contacto existente (PUT)
-app.put('/contacts/:contactId', (req, res) => {
-  const contactId = parseInt(req.params.contactId);
-  const updatedContact = req.body;
-  let contactUpdated = false;
-  contacts = contacts.map((contact) => {
-    if (contact.id === contactId) {
-      contactUpdated = true;
-      return { ...contact, ...updatedContact };
-    }
-    return contact;
+// Endpoint para crear un nuevo usuario
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    users.push(newUser);
+    res.status(201).json(newUser);
   });
-  if (contactUpdated) {
-    res.json({ message: 'Contacto actualizado.' });
-  } else {
-    res.status(404).json({ error: 'Contacto no encontrado.' });
-  }
-});
-
-// Endpoint para eliminar un contacto
-app.delete('/contacts/:contactId', (req, res) => {
-  const contactId = parseInt(req.params.contactId);
-  const initialLength = contacts.length;
-  contacts = contacts.filter((contact) => contact.id !== contactId);
-  if (contacts.length < initialLength) {
-    res.json({ message: 'Contacto borrado.' });
-  } else {
-    res.status(404).json({ error: 'Contacto no encontrado' });
-  }
-});
+  
+  // Endpoint para obtener todos los usuarios
+  app.get('/users', (req, res) => {
+    res.json(users);
+  });
+  
+  // Endpoint para obtener un usuario por su ID
+  app.get('/users/:userId', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const user = users.find((user) => user.id === userId);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  });
+  
+  // Endpoint para obtener los contactos de un usuario
+  app.get('/users/:userId/contacts', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const userContacts = contacts.filter((contact) => contact.userId === userId);
+    res.json(userContacts);
+  });
+  
+  // Endpoint para agregar un contacto a un usuario
+  app.post('/users/:userId/contacts', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const newContact = { ...req.body, userId };
+    contacts.push(newContact);
+    res.status(201).json(newContact);
+  });
+   
 
 //Iniciar el servidor
 app.listen(3000, () => {

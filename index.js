@@ -1,4 +1,4 @@
-// Importación de Express
+// Importación de Express: Para creación de APIs de forma rápida y escalable
 const express = require('express');
 // Se crea la instancia de la aplicación de express y se asigna a la variable app
 const app = express();

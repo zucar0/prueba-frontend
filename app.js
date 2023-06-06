@@ -1,6 +1,7 @@
 require("dotenv").config() //Indicación para uso de variables de entorno
 const express = require("express") //Express: Para levantar el servidor web
 const cors = require("cors") // Librería para evitar error de origen cruzado entre navegadores
+const dbConnect= require('./config/mongo') //Importación de dbConnect
 const app = express()
 
 app.use(cors()) //Se indica a la aplicación que use el plugin

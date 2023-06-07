@@ -1,7 +1,8 @@
 //Contiene la lógica de la aplicación 
 //(Conexión a DB, operaciones lógicas)
-
+const { matchData } = require("express-validator");
 const {usersModel} = require('../models');
+const { handleHttpError } = require('../utils/handleError');
 
 //Las funciones declaradas reciben lo que envía Express:Request y Response
 
@@ -11,8 +12,12 @@ const {usersModel} = require('../models');
  * @param {*} res 
  */
 const getUsers = async (req, res) =>{
-    const data = await usersModel.find({});
-    res.send({data})
+    try{
+        const data = await usersModel.find({});
+        res.send({data})
+    }catch(e){
+        handleHttpError(res, 'ERROR_GET_USERS')
+    }
 };
 
 /**
@@ -20,7 +25,7 @@ const getUsers = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-const getUser = (req, res) =>{};
+const getUser = async (req, res) =>{};
 
 /**
  * Insertar un registro de usuario
@@ -28,11 +33,18 @@ const getUser = (req, res) =>{};
  * @param {*} res 
  */
 const createUser = async (req, res) =>{
-    const { body} = req
-    console.log(body)
-    const data = await usersModel.create(body)
-    //Los controladores siempre deben retornar algo
-    res.send({data})
+    try{
+
+        const body = matchData(req);
+
+        // const { body} = req
+        const data = await usersModel.create(body);
+        //Los controladores siempre deben retornar algo
+        res.send({data});
+    }catch(e){
+        handleHttpError(res, 'ERROR_CREATE_USER')
+    }
+
 };
 
 /**
@@ -40,7 +52,7 @@ const createUser = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-const updateUser = (req, res) =>{};
+const updateUser = async (req, res) =>{};
 
 /**
  * Eliminar un usuario

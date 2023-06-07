@@ -8,7 +8,11 @@ app.use(cors()) //Se indica a la aplicación que use el plugin
 
 const port = process.env.PORT || 3000 // Constante referente al puerto a través de variable de entorno
 
-//LA aplicación comienza a escuchar por el puerto 3000
+// Invocación de las rutas
+// TODO localhost/api/____
+app.use("/api", require("./routes"))
+
+//La aplicación comienza a escuchar por el puerto 3000
 app.listen(port, () => {
     console.log(`Tu app está lista por http://localhost:${port}`)
 })

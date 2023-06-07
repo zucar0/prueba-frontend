@@ -5,6 +5,7 @@ const dbConnect= require('./config/mongo') //Importación de dbConnect
 const app = express()
 
 app.use(cors()) //Se indica a la aplicación que use el plugin
+app.use(express.json())//Se indica a la app estar preparado para recibir información
 
 const port = process.env.PORT || 3000 // Constante referente al puerto a través de variable de entorno
 

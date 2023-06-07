@@ -1,12 +1,13 @@
 const express = require("express");
+const { getUsers, getUser, createUser } = require("../controllers/users");
 const router = express.Router(); // Router: Manejador de rutas
 
 //TODO http://localhost/users (GET, POST, DELETE, PUT)
 //Declaración de rutas:
 
-router.get("/", (req,res) =>{
-    const data =["hola","mundo"]
-    res.send({data})
-})
+router.get("/", getUsers);
+
+//Listar detalles
+router.post("/", createUser);
 
 module.exports = router; 

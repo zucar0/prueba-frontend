@@ -1,5 +1,5 @@
 //Importar check del Express validator
-const {check} = require("express-validators");
+const {check} = require("express-validator");
 const validateResults = require("../utils/handleValidator")
 //Se va a validar que exista la propiedad name, que exista y que no esté vacía
 const validatorCreateUser = [
@@ -15,7 +15,7 @@ const validatorCreateUser = [
 ]
 
 const validatorGetUser = [
-    check("id").exists().notEmpty().isMongoId(),
+    check("id").exists().notEmpty(),
     (req,res,next) =>{
         return validateResults(req, res, next)
     }

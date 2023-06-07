@@ -1,5 +1,5 @@
 //Importar check del Express validator
-const {check} = require("express-validator");
+const {check} = require("express-validators");
 const validateResults = require("../utils/handleValidator")
 //Se va a validar que exista la propiedad name, que exista y que no esté vacía
 const validatorCreateUser = [

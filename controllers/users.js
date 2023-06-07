@@ -25,7 +25,16 @@ const getUsers = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-const getUser = async (req, res) =>{};
+const getUser = async (req, res) =>{
+    try{
+        req = matchedData(req);
+        const {id} = req;
+        const data = await usersModel.findById(id);
+        res.send({data});
+    }catch(e){
+        handleHttpError(res, "ERROR_GET_USER");
+    }
+};
 
 /**
  * Insertar un registro de usuario
@@ -52,13 +61,34 @@ const createUser = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-const updateUser = async (req, res) =>{};
+const updateUser = async (req, res) =>{
+    try{
+        const { id, ...body } = matchData(req); //Se crean dos objetos
+        const data = await usersModel.findOneAndUpdate(
+            id, body
+        );
+        //Los controladores siempre deben retornar algo
+        res.send({data});
+    }catch(e){
+        handleHttpError(res, 'ERROR_UPDATE_USER')
+    }
+};
 
 /**
  * Eliminar un usuario
  * @param {*} req 
  * @param {*} res 
  */
-const deleteUser = (req, res) =>{};
+const deleteUser = async (req, res) =>{
+    try{
+        req = matchedData(req);
+        const {id} = req;
+        const data = await usersModel.deleteOne({_id:id});
+        res.send({data});
+    }catch(e){
+        console.log(e)
+        handleHttpError(res, "ERROR_DELETE_USER");
+    }
+};
 
 module.exports = { getUsers, getUser, createUser, updateUser, deleteUser}

@@ -32,7 +32,7 @@ const createUser = async (req, res) =>{
     console.log(body)
     const data = await usersModel.create(body)
     //Los controladores siempre deben retornar algo
-    res.send({algo:1})
+    res.send({data})
 };
 
 /**

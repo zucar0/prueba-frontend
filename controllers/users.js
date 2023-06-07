@@ -1,6 +1,6 @@
 //Contiene la lógica de la aplicación 
 //(Conexión a DB, operaciones lógicas)
-const { matchData } = require("express-validator");
+const { matchData } = require("express-validators");
 const {usersModel} = require('../models');
 const { handleHttpError } = require('../utils/handleError');
 

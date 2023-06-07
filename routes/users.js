@@ -1,7 +1,8 @@
 const express = require("express");
-const { getUsers, getUser, createUser } = require("../controllers/users");
-const { validatorCreateUser } = require("../validators/users")
 const router = express.Router(); // Router: Manejador de rutas
+const customHeader = require("../middleware/customHeader");
+const { validatorCreateUser } = require("../validators/users")
+const { getUsers, getUser, createUser } = require("../controllers/users");
 
 //TODO http://localhost/users (GET, POST, DELETE, PUT)
 //Declaración de rutas:
